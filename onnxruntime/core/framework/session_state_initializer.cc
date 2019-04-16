@@ -48,6 +48,8 @@ static common::Status SaveInputOutputNamesToNodeMapping(const onnxruntime::Graph
                                                         SessionState& session_state,
                                                         const std::vector<NodeArg*>* implicit_inputs);
 
+static common::Status ProcessDelayedInputNamesToNodeMapping(onnxruntime::Graph& graph, SessionState& session_state);
+
 SessionStateInitializer::SessionStateInitializer(const std::basic_string<PATH_CHAR_TYPE>& graph_loc,
                                                  onnxruntime::Graph& graph, SessionState& session_state,
                                                  const ExecutionProviders& providers,
@@ -128,6 +130,8 @@ common::Status SessionStateInitializer::InitializeAndSave(const std::vector<Node
   ORT_RETURN_IF_ERROR(SaveKernels(execution_providers_, session_state_, kernel_registry_manager_, logger_));
   ORT_RETURN_IF_ERROR(SaveInputOutputNamesToNodeMapping(graph_, kernel_registry_manager_, session_state_,
                                                         implicit_inputs));
+
+  ORT_RETURN_IF_ERROR(ProcessDelayedInputNamesToNodeMapping(graph_, session_state_));
 
   return Status::OK();
 }
@@ -505,5 +509,9 @@ common::Status SaveInputOutputNamesToNodeMapping(const onnxruntime::Graph& graph
   }
 
   return Status::OK();
+}
+
+common::Status ProcessDelayedInputNamesToNodeMapping(onnxruntime::Graph& graph, SessionState& session_state) {
+  return session_state.ProcessDelayesInputNameToNodeInfoMapping(graph);
 }
 }  // namespace onnxruntime
