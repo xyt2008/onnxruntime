@@ -67,7 +67,7 @@ TEST(SqueezeOpTest, DuplicateAxes) {
 
 TEST(SqueezeOpTest, BadAxes) {
   OpTester test("Squeeze");
-  test.AddShapeToTensorData(false);  // TODO: re-enable shape inference test after ONNX fix, and enable test in Nuphar
+  test.AddShapeToTensorData(false);  // TODO: re-enable shape inference test after ONNX fix
   // Bad axes - should be 1 instead of 0.
   test.AddAttribute("axes", std::vector<int64_t>{0});
   test.AddInput<float>("data", {3, 1, 4, 5}, std::vector<float>(60, 1.0f));

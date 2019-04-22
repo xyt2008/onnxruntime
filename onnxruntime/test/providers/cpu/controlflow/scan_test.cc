@@ -396,7 +396,7 @@ static void RunTest_v9(const std::string test_name, int64_t sequence_len, int64_
   test.AddOutput<float>("scan_output_2", calculate_output_shape(2), output_2);
   test.AddOutput<float>("scan_output_3", calculate_output_shape(3), output_3);
 
-  // disable Nuphar provider test on Scan, will re-enable once Nuphar supports no shape infer
+  // disable TensorRT/Nuphar provider test on Scan, will re-enable once Nuphar supports no shape infer
   if (options.mixed_execution_providers) {
     // we want the CUDA provider to be first, and the CPU provider second. all except the Scannode should run on
     // CUDA given that, which creates the scenario where we need to copy to/from CPU to execute the Scan node correctly.
@@ -406,7 +406,7 @@ static void RunTest_v9(const std::string test_name, int64_t sequence_len, int64_
 
     test.Run(expect_result, failure_message, {kTensorrtExecutionProvider, kNupharExecutionProvider}, nullptr, &execution_providers);
   } else {
-    test.Run(expect_result, failure_message, {kNupharExecutionProvider});
+    test.Run(expect_result, failure_message, {kTensorrtExecutionProvider, kNupharExecutionProvider});
   }
 }
 
