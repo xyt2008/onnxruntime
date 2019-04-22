@@ -51,7 +51,7 @@ OnnxRuntimeTestSession::OnnxRuntimeTestSession(OrtEnv* env, const PerformanceTes
 #endif
   } else if (provider_name == onnxruntime::kNupharExecutionProvider) {
 #ifdef USE_NUPHAR
-    ORT_THROW_ON_ERROR(OrtSessionOptionsAppendExecutionProvider_Nuphar(sf, 0, ""));
+    ORT_THROW_ON_ERROR(OrtSessionOptionsAppendExecutionProvider_Nuphar(sf, /*allow_unaligned_buffers*/ 0, 0, ""));
 #else
     ORT_THROW("Nuphar is not supported in this build\n");
 #endif
