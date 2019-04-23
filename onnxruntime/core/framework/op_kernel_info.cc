@@ -58,8 +58,12 @@ bool OpKernelInfo::TryGetConstantInput(int input_index, const Tensor** constant_
     return false;
   }
   auto& input_arg_name = node_.InputDefs()[input_index]->Name();
+  return TryGetConstantInput(input_arg_name, constant_input_value);
+}
+
+bool OpKernelInfo::TryGetConstantInput(const std::string& name, const Tensor** constant_input_value) const {
   int input_arg_index = -1;
-  if (!mlvalue_name_idx_map_.GetIdx(input_arg_name, input_arg_index).IsOK()) {
+  if (!mlvalue_name_idx_map_.GetIdx(name, input_arg_index).IsOK()) {
     return false;
   }
 
