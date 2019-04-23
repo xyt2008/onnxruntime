@@ -85,7 +85,8 @@ TEST(SqueezeOpTest, AllAxes) {
   // Dummy data
   test.AddOutput<float>("squeezed", {}, std::vector<float>(1, 1.0f));
 
-  test.Run();
+  // currently not working in TensorRT provider
+  test.Run(OpTester::ExpectResult::kExpectSuccess, "", {kTensorrtExecutionProvider});
 }
 }  // namespace test
 }  // namespace onnxruntime

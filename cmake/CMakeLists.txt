@@ -1,8 +1,8 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-# Minimum CMake required, keep it 3.12 until final merge into GitHub
-cmake_minimum_required(VERSION 3.12)
+# Minimum CMake required
+cmake_minimum_required(VERSION 3.13)
 
 # Project
 project(onnxruntime C CXX)
