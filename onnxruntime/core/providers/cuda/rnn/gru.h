@@ -26,7 +26,14 @@ class GRU final : public CudnnRnnBase<T> {
     // the linLayerID is 1, 0, 2, 4, 3, 5, we can reuse it from W_lin_layer_id & R_lin_layer_id
 
     CudnnRnnBase<T>::CacheCudnnRnnWeights(info);
+
+    ORT_ENFORCE(info.GetAttr("linear_before_reset", &linear_before_reset_).IsOK());
   }
+
+  Status ComputeInternal(OpKernelContext* ctx) const override;
+
+ private:
+  int64_t linear_before_reset_{};
 };
 
 }  // namespace cuda
